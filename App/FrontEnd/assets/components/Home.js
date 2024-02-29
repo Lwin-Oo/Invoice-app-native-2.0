@@ -1,22 +1,40 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import axios from 'axios';
+
 import Header from './Header';
 
 const Home = () => {
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/invoices');
+        setInvoices(response.data);
+      } catch (error) {
+        console.error('Error fetching invoices: ', error.message);
+      }
+    };
+
+    fetchInvoices();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Header />
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardHeaderText}>Invoice</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.invoiceText}>Invoice Number: 123456</Text>
-          <Text style={styles.invoiceText}>Customer Name: Lwin Oo</Text>
-          <Text style={styles.invoiceText}>Date: 2024-02-19</Text>
-          {/* Add placeholders for other data */}
-        </View>
-      </View>
+      <Header/>
+      <ScrollView>
+        <Text style={styles.title}>Invoice Cards</Text>
+        {invoices.map((invoice) => (
+          <View key={invoice._id} style={styles.cardContainer}>
+            <View style={styles.card}>
+              <Text style={styles.invoiceNumber}>Invoice Number: {invoice.invoiceNumber}</Text>
+              <Text style={styles.totalAmount}>Total Amount: ${invoice.totalAmount}</Text>
+              <Text style={styles.totalQuantities}>Total Quantities: {invoice.totalQuantities}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -24,42 +42,49 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
   },
-  card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    margin: 10,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  cardContainer: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  cardHeader: {
-    backgroundColor: '#007bff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+  card: {
+    padding: 16,
   },
-  cardHeaderText: {
-    color: '#ffffff',
-    fontSize: 20,
+  invoiceNumber: {
+    fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#333333',
   },
-  cardContent: {
-    padding: 20,
-  },
-  invoiceText: {
+  totalAmount: {
     fontSize: 16,
-    marginBottom: 5,
+    color: '#666666',
+  },
+  totalQuantities: {
+    fontSize: 16,
+    color: '#666666',
   },
 });
 
 export default Home;
+
 
 
