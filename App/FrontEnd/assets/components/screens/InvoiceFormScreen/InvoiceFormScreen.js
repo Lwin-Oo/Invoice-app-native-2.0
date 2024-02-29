@@ -53,6 +53,7 @@ const InvoiceForm = () => {
 
   // Handle Invoice Form submit functionalities
   const handleSubmit = async () => {
+
     // Calculate total quantities
     const totalQuantities = calculateTotalQuantities();
     
@@ -100,6 +101,8 @@ const InvoiceForm = () => {
     try {
       const response = await axios.post(backendUrl, formData);
       console.log('Form data submitted successfully:', response.data);
+      window.location.reload();
+      navigation.navigate('Home');
       // Handle success, if needed
     } catch (error) {
       if (error.response) {
