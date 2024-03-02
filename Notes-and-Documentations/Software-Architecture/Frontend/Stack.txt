@@ -1,0 +1,19 @@
+Native Android Development:
+
+Language: Java or Kotlin
+Framework: Android SDK
+IDE: Android Studio
+_____________________________
+
+Native iOS Development:
+
+Language: Swift or Objective-C
+Framework: iOS SDK
+IDE: Xcode
+_____________________________
+
+Cross-Platform Native Development:
+
+Language: JavaScript/TypeScript (React Native), Dart (Flutter)
+Frameworks: React Native, Flutter
+IDE: Visual Studio Code 
