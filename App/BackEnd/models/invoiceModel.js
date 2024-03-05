@@ -63,6 +63,10 @@ const invoiceSchema = new mongoose.Schema({
     customerEmail: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        default: 'Created' 
     }
 });
 
