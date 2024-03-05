@@ -72,18 +72,33 @@ const InvoiceController = {
 
     updateInvoice: async (req, res) => {
         const { id } = req.params;
-        const updateFields = req.body;
-
+        const { status } = req.body;
+    
+        // Log the request body to check if status is present
+        console.log('Request Body:', req.body);
+    
         try {
-            const updatedInvoice = await Invoice.findByIdAndUpdate(id, updateFields, { new: true });
+            let updatedInvoice;
+    
+            // Check if status field is provided in the request body
+            if (status !== undefined) {
+                // Update only the status field
+                updatedInvoice = await Invoice.findByIdAndUpdate(id, { status }, { new: true });
+            } else {
+                // If status field is not provided, update all fields
+                updatedInvoice = await Invoice.findByIdAndUpdate(id, req.body, { new: true });
+            }
+    
             if (!updatedInvoice) {
                 return res.status(404).json({ message: 'Invoice not found' });
             }
+    
             res.json(updatedInvoice);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     },
+    
 
     deleteInvoice: async (req, res) => {
         const { id } = req.params;
