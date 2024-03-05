@@ -56,6 +56,9 @@ const InvoiceForm = () => {
     // Calculate total amount
     const totalAmount = calculateTotalAmount().toFixed(2);
   
+    // Define the status (assuming it should be 'Created' for new invoices)
+    const status = 'Created';
+  
     const formData = {
       invoiceNumber: invoiceNumber,
       customerName: customerName,
@@ -72,11 +75,12 @@ const InvoiceForm = () => {
       totalQuantities: totalQuantities,
       totalAmount: totalAmount,
       customerEmail: customerEmail,
+      status: status, // Add the status field
     };
   
     console.log(formData); // Log the form data to the terminal
-    
-    try {
+  
+   try {
       // Generate PDF and get the file path
       const pdfFilePath = await generatePdf(formData);
       console.log('PDF generated:', pdfFilePath);
@@ -389,5 +393,4 @@ const styles = StyleSheet.create({
 });
 
 export default InvoiceForm;
-
 
