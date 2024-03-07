@@ -93,7 +93,11 @@ const InvoiceForm = () => {
       // Reload the window and navigate to the home screen
       window.location.reload();
       navigation.navigate('Home');
+<<<<<<< HEAD
        //Handle success, if needed
+=======
+      // Handle success, if needed
+>>>>>>> de62fc386aec93effd79397f881a369252fc03eb
     } catch (error) {
       if (error.response) {
         //The request was made and the server responded with a status code
@@ -394,6 +398,9 @@ const styles = StyleSheet.create({
 
 export default InvoiceForm;
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> de62fc386aec93effd79397f881a369252fc03eb
