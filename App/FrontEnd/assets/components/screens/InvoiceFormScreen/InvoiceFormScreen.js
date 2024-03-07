@@ -2,11 +2,9 @@ import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-//import * as MailComposer from 'expo-mail-composer';
-//import { generatePdf } from './pdfUtils'; // Import PDF generation utility function
-import { PdfViewer } from './PdfViewer';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import generatePdf from '../../../constants/generatePdf';
 
 LocaleConfig.locales['en'] = {
   monthNames: [
@@ -27,8 +25,7 @@ const InvoiceForm = () => {
   const [isCalendarVisible, setCalendarVisibility] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [items, setItems] = useState([{ name: '', quantity: '', unitPrice: '' }]);
-  const [pdfUri, setPdfUri] = useState(null); // To store PDF URI
-  const pdfRef = useRef(null);
+  
   const [customerEmail, setCustomerEmail] = useState('');
   const [billingStreetInfo, setBillingStreetInfo] = useState('');
   const [billingCity, setBillingCity] = useState('');
@@ -58,7 +55,10 @@ const InvoiceForm = () => {
     
     // Calculate total amount
     const totalAmount = calculateTotalAmount().toFixed(2);
-
+  
+    // Define the status (assuming it should be 'Created' for new invoices)
+    const status = 'Created';
+  
     const formData = {
       invoiceNumber: invoiceNumber,
       customerName: customerName,
@@ -75,40 +75,33 @@ const InvoiceForm = () => {
       totalQuantities: totalQuantities,
       totalAmount: totalAmount,
       customerEmail: customerEmail,
+      status: status, // Add the status field
     };
-
-    console.log(formData); // Log the form data to the terminal
-    
-    // Clear the form fields
-    setInvoiceNumber('');
-    setSelectedDate('');
-    setCustomerName('');
-    setCustomerEmail('');
-    setBillingStreetInfo('');
-    setBillingCity('');
-    setBillingState('');
-    setBillingZIP('');
-    setShippingStreetInfo('');
-    setShippingCity('');
-    setShippingState('');
-    setShippingZIP('');
-    setItems([{ name: '', quantity: '', unitPrice: '' }]);
   
-    // Send form data to backend server
-    const backendUrl = 'http://localhost:5000/api/invoices';
-
-    try {
+    console.log(formData); // Log the form data to the terminal
+  
+   try {
+      // Generate PDF and get the file path
+      const pdfFilePath = await generatePdf(formData);
+      console.log('PDF generated:', pdfFilePath);
+  
+      // Send form data to backend server
+      const backendUrl = 'http://localhost:5000/api/invoices';
       const response = await axios.post(backendUrl, formData);
       console.log('Form data submitted successfully:', response.data);
-      // Handle success, if needed
+  
+      // Reload the window and navigate to the home screen
+      window.location.reload();
+      navigation.navigate('Home');
+       //Handle success, if needed
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
+        //The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         console.error('Error submitting form data:', error.response.data);
         console.error('Status code:', error.response.status);
       } else if (error.request) {
-        // The request was made but no response was received
+        //The request was made but no response was received
         console.error('No response received:', error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
@@ -116,8 +109,8 @@ const InvoiceForm = () => {
       }
       // Handle error, if needed
     }
-
   };
+  
 
   // Add items
   const addItem = () => {
@@ -299,8 +292,7 @@ const InvoiceForm = () => {
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
 
-      {pdfUri && <PdfViewer uri={pdfUri} />}
-      
+ 
     </View>
   );
 };
@@ -401,5 +393,7 @@ const styles = StyleSheet.create({
 });
 
 export default InvoiceForm;
+
+
 
 

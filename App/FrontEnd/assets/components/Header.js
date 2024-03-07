@@ -22,12 +22,7 @@ const Header = () => {
             <View style={styles.buttonContainer}>
                 {/* "Create" button */}
                 <TouchableOpacity style={styles.button} onPress={handleCreatePress}>
-                    <Text style={styles.buttonText}>Create</Text>
-                </TouchableOpacity>
-
-                {/* "Send" button */}
-                <TouchableOpacity style={styles.button} onPress={() => console.log('Send button pressed!')}>
-                    <Text style={styles.buttonText}>Send</Text>
+                    <Text style={styles.buttonText}>Create an Invoice</Text>
                 </TouchableOpacity>
             </View>
         </View>

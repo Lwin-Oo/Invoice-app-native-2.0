@@ -1,0 +1,25 @@
+Native Development:
+
+Language: Java, Kotlin, Swift, Objective-C, C#
+Frameworks: Spring (Java/Kotlin), Vapor (Swift), Perfect (Swift), Kitura (Swift), ASP.NET Core (C#)
+IDE: Xcode, Visual Studio
+Databases: MongoDB, Firebase, MySQL
+
+Cross-Platform Native Development:
+
+Frameworks: Node.js with Express.js, Django (Python), Flask (Python), Ruby on Rails (Ruby)
+Language: JavaScript (Node.js), Python (Django, Flask), Ruby (Ruby on Rails)
+IDE: Visual Studio Code, (PyCharm, Sublime Text, Atom)
+Databases: MongoDB, Firebase, MySQL
+______________________________________________________________________________________________________________________
+
+Considerations:
+
+Native Development: 
+Provides the best performance and access to native device features. It's ideal if WE need maximum performance and platform-specific functionality. However, it requires separate codebases for Android and iOS.
+
+Cross-Platform Native Development: 
+Offers the advantage of writing code once and deploying it on multiple platforms. It's suitable if WE want to reach a broader audience with minimal code duplication. However, it may have some performance overhead compared to native development.
+
+Scalability and Maintenance: 
+Consider the scalability and maintainability of OUR chosen stack. Ensure that it can handle the growth of OUR application and that it's easy to maintain and update in the long run.
